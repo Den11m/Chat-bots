@@ -29,6 +29,7 @@ input, textarea {
 
 .login-form input {
     max-width: 100%;
+    text-align: center;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -41,7 +42,7 @@ input, textarea {
 
 .login-form input:focus {
     border-bottom: solid 2px #5d5d8a;
-    outline: none
+    outline: none;
 }
 
 .login-form .error {

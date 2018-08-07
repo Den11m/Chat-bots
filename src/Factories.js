@@ -8,7 +8,7 @@ const {v4} = require('uuid');
 *	@param {object} 
 *		name {string}
 */
-const createUser = ({name = "", photo = "",socketId = null} = {})=>(
+const createUser = ({name = "", photo = "https://upload.wikimedia.org/wikipedia/commons/1/1e/Default-avatar.jpg",socketId = null} = {})=>(
 	{
 		id:v4(),
 		name,

@@ -191,7 +191,9 @@ export default class ChatContainer extends Component {
                         activeChat !== null ? (
 
                                 <div className="chat-room">
-                                    <ChatHeading name={activeChat.name}/>
+                                    <ChatHeading name={activeChat.name}
+                                                 photo={"https://upload.wikimedia.org/wikipedia/commons/1/1e/Default-avatar.jpg"}
+                                    />
                                     <Messages
                                         messages={activeChat.messages}
                                         user={user}
