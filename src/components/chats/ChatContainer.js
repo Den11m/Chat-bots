@@ -14,6 +14,7 @@ import ChatHeading from './ChatHeading'
 import Messages from '../messages/Messages'
 import MessageInput from '../messages/MessageInput'
 import {values, difference, differenceBy} from 'lodash'
+import {createChatNameFromUsers} from '../../Factories';
 
 
 export default class ChatContainer extends Component {
@@ -185,7 +186,10 @@ export default class ChatContainer extends Component {
         const {user, logout} = this.props;
         const {chats, activeChat, users} = this.state;
         // console.log('user--->>>', user);
-        // console.log('this state--->>>', this.state);
+        // console.log('this state activeChat--->>>', this.state.activeChat);
+        // console.log('this state chats--->>>', this.state.chats);
+        // console.log('<<<<--->>>>', activeChat.users.forEach(u => {return u !== user.name}));
+
         return (
             <div className="container">
                 <div className="header">
@@ -196,7 +200,7 @@ export default class ChatContainer extends Component {
                         activeChat !== null ? (
 
                                 <div className="chat-room">
-                                    <ChatHeading name={activeChat.name}
+                                    <ChatHeading name={activeChat.users[0] ? activeChat.users.filter(u => {return u !== user.name})[0] : activeChat.name}
                                                  photo={activeChat.photo}
                                     />
                                     <Messages
