@@ -17,12 +17,14 @@ export default class SideBarOption extends Component {
 
 
     render() {
-        const {name, lastMessage, active, onClick} = this.props;
+        const {name, lastMessage, active, onClick, photo} = this.props;
         return (
             <div className={`user ${active ? 'active' : ''}`}
                  onClick={onClick}
             >
-                <div className="user-photo">{name[0].toUpperCase()}</div>
+                <div className="user-photo">
+                    <img src={photo} alt="users avatar"/>
+                    </div>
                 <div className="user-info">
                     <div className="name">{name}</div>
                     {lastMessage && <div className="last-message">{lastMessage}</div>}

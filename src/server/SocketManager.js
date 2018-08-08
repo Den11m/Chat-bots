@@ -4,11 +4,11 @@ const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED,
 		LOGOUT, COMMUNITY_CHAT, MESSAGE_RECIEVED, MESSAGE_SENT,
 		TYPING, PRIVATE_MESSAGE, NEW_CHAT_USER } = require('../Events');
 
-const { createUser, createMessage, createChat } = require('../Factories');
+const { createUser, createMessage, createChat, bots } = require('../Factories');
 
-let connectedUsers = { };
+let connectedUsers = {...bots };
 
-let communityChat = createChat({isCommunity:true});
+let communityChat = createChat({name:"Community", isCommunity:true});
 
 module.exports = function(socket){
 					
@@ -78,7 +78,7 @@ module.exports = function(socket){
         if(receiver in connectedUsers){
         	if(activeChat === null || activeChat.id === communityChat.id){
 
-                const newChat = createChat({name:`${receiver}&${sender}`, users: [receiver, sender]});
+                const newChat = createChat({name: receiver, photo:`${connectedUsers[receiver].photo}`, users: [receiver, sender]});
 
                 const receiverSocket = connectedUsers[receiver].socketId;
                 socket.to(receiverSocket).emit(PRIVATE_MESSAGE, newChat);

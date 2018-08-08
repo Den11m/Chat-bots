@@ -1,5 +1,33 @@
 const {v4} = require('uuid');
 
+
+const bots = [
+    {
+        id: "id_0",
+        name: "Echo_bot",
+        photo: "./img/echo.png",
+        socketId: "socketId_0"
+    },
+    {
+        id: "id_1",
+        name: "Reverse_bot",
+        photo: "./img/reverse.png",
+        socketId: "socketId_1"
+    },
+    {
+        id: "id_2",
+        name: "Spam_bot",
+        photo: "./img/spam.png",
+        socketId: "socketId_2"
+    },
+    {
+        id: "id_3",
+        name: "Ignore_bot",
+        photo: "./img/ignore.png",
+        socketId: "socketId_3"
+    },
+];
+
 /*
 *	createUser
 *	Creates a user.
@@ -53,12 +81,13 @@ const createMessage = ({message = "", sender = ""} = { })=>(
 *		users {Array.string}
 * 
 */
-const createChat = ({messages = [], name = "Community", users = [], isCommunity = false} = {})=>(
+const createChat = ({messages = [], name = "", photo = "./img/community.jpg", users = [], isCommunity = false} = {})=>(
 	{
 		id:v4(),
-		name: isCommunity ? "Community" : createChatNameFromUsers(users),
+		name: name ? name : createChatNameFromUsers(users),
 		messages,
 		users,
+		photo,
 		typingUsers:[],
         isCommunity
 	}
@@ -85,5 +114,6 @@ module.exports = {
 	createMessage,
 	createChat,
 	createUser,
-    createChatNameFromUsers
+    createChatNameFromUsers,
+	bots
 };

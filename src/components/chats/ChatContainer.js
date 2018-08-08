@@ -184,15 +184,20 @@ export default class ChatContainer extends Component {
     render() {
         const {user, logout} = this.props;
         const {chats, activeChat, users} = this.state;
+        // console.log('user--->>>', user);
+        // console.log('this state--->>>', this.state);
         return (
             <div className="container">
+                <div className="header">
+                    <h1 className="title">Chat bot 2.0</h1>
+                </div>
                 <div className="chat-room-container">
                     {
                         activeChat !== null ? (
 
                                 <div className="chat-room">
                                     <ChatHeading name={activeChat.name}
-                                                 photo={"https://upload.wikimedia.org/wikipedia/commons/1/1e/Default-avatar.jpg"}
+                                                 photo={activeChat.photo}
                                     />
                                     <Messages
                                         messages={activeChat.messages}

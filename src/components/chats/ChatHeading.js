@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function({name, photo, numberOfUsers}) {
+export default function({name, photo}) {
 	
 	return (
 		<div className="chat-header">
@@ -9,7 +9,6 @@ export default function({name, photo, numberOfUsers}) {
 				<div className="user-name">{name}</div>
 				<div className="status">
 					<div className="indicator"></div>
-					<span>{numberOfUsers ? numberOfUsers : null}</span>
 				</div>
 			</div>
 		</div>

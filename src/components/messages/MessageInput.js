@@ -76,7 +76,7 @@ export default class MessageInput extends Component {
 						className = "form-control"
 						value = { message }
 						autoComplete = {'off'}
-						placeholder = "Type something interesting"
+						placeholder = "Start chatting!"
 						onKeyUp = { e => { e.keyCode !== 13 && this.sendTyping() } }
 						onChange = {
 							({target})=>{

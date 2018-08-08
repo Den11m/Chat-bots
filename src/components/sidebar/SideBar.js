@@ -70,6 +70,7 @@ export default class SideBar extends Component {
                                         <SideBarOption
                                             key={chat.id}
                                             name={chat.isCommunity ? chat.name : createChatNameFromUsers(chat.users, user.name)}
+                                            photo={chat.photo}
                                             lastMessage={get(last(chat.message), 'message', '')}
                                             active={activeChat.id === chat.id}
                                             onClick={() => {
@@ -86,6 +87,7 @@ export default class SideBar extends Component {
                                         <SideBarOption
                                             key={otherUser.id}
                                             name={otherUser.name}
+                                            photo={otherUser.photo}
                                             onClick={() => {
                                                 this.addChatForUser(otherUser.name)
                                             }}

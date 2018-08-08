@@ -52,8 +52,28 @@ input, textarea {
     color: #c92c43
 }
 
+.wrapper {
+    width: 100%;
+    height: 100%;
+    background: #586670;
+}
+
+.header {
+    background: #ffffff;
+}
+
+.header .title {
+    display: none;
+    font-size: 2rem;
+    color: #000000;
+    padding: 35px 80px 20px;
+    margin: 0;
+}
+
+
 .container {
     color: #d7dfe7;
+    /*background: #586670;*/
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -119,6 +139,16 @@ input, textarea {
 #side-bar .search .search-icon {
     margin-right: 15px;
     cursor: pointer
+}
+
+#side-bar .user-photo {
+    width: 60px;
+    height: 60px;
+}
+
+#side-bar .user-photo img {
+    width: 60px;
+    height: auto;
 }
 
 #side-bar .search input {
@@ -252,7 +282,7 @@ input, textarea {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 16px
+    /*padding: 18px 16px*/
 }
 
 .chat-header .user-info {
@@ -260,8 +290,16 @@ input, textarea {
     display: flex
 }
 
+.chat-header .user-info img {
+    width: 170px;
+    height: auto;
+}
+
 .chat-header .user-info .user-name {
-    margin-right: 10px
+    margin-left: 20px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #000000;
 }
 
 .chat-header .user-info .status {
@@ -278,9 +316,9 @@ input, textarea {
     width: 15%
 }
 
-.chat-header .options svg {
-    cursor: pointer
-}
+/*.chat-header .options svg {*/
+    /*cursor: pointer*/
+/*}*/
 
 .chat-room-container {
     height: 100%;
