@@ -51,7 +51,7 @@ export default class ChatContainer extends Component {
             this.setState({users: values(users)})
         });
         socket.on(USER_DISCONNECTED, (users) => {
-            const removedUsers = differenceBy(this.state.users, values(users),'id');
+            const removedUsers = differenceBy(this.state.users, values(users), 'id');
             this.removeUsersFromChat(removedUsers);
             this.setState({users: values(users)})
         });
@@ -65,23 +65,25 @@ export default class ChatContainer extends Component {
     };
 
     addUserToChat = ({chatId, newUser}) => {
-        const {chat} = this.state;
-        const newChats = chat.map(chat => {
+        const {chats} = this.state;
+        const newChats = chats.map(chat => {
             if (chat.id === chatId) {
                 return Object.assign({}, chat, {users: [...chat.users, newUser]})
+            } else {
+                return chat
             }
-            return chat
+
         });
         this.setState({chats: newChats})
     };
 
     removeUsersFromChat = removedUsers => {
         const {chats} = this.state;
-        const newChats = chats.map(chat =>{
-            let newUsers = difference(chat.users, removedUsers.map(u=>u.name));
-            return Object.assign({},chat, {users:newUsers})
+        const newChats = chats.map(chat => {
+            let newUsers = difference(chat.users, removedUsers.map(u => u.name));
+            return Object.assign({}, chat, {users: newUsers})
         });
-        this.setState({chats:newChats})
+        this.setState({chats: newChats})
     };
 
     /*
@@ -165,7 +167,9 @@ export default class ChatContainer extends Component {
     */
     sendMessage = (chatId, message) => {
         const {socket} = this.props;
-        socket.emit(MESSAGE_SENT, {chatId, message})
+        const {chats, activeChat, users} = this.state;
+        let botName = activeChat.name
+        socket.emit(MESSAGE_SENT, {chatId, message, botName})
     };
 
     /*
@@ -189,6 +193,7 @@ export default class ChatContainer extends Component {
         // console.log('this state activeChat--->>>', this.state.activeChat);
         // console.log('this state chats--->>>', this.state.chats);
         // console.log('<<<<--->>>>', activeChat.users.forEach(u => {return u !== user.name}));
+        // console.log('<<<<--->>>>', this.state);
 
         return (
             <div className="container">
@@ -200,7 +205,7 @@ export default class ChatContainer extends Component {
                         activeChat !== null ? (
 
                                 <div className="chat-room">
-                                    <ChatHeading name={activeChat.users[0] ? activeChat.users.filter(u => {return u !== user.name})[0] : activeChat.name}
+                                    <ChatHeading name={activeChat.users[0] ? activeChat.users.filter(u => u !== user.name).join(' & ') : activeChat.name}
                                                  photo={activeChat.photo}
                                     />
                                     <Messages

@@ -24,6 +24,10 @@ export default class SideBarOption extends Component {
             >
                 <div className="user-photo">
                     <img src={photo} alt="users avatar"/>
+                    {
+                        name !== 'Community' ?
+                        <div className={`online`}/> : null
+                    }
                     </div>
                 <div className="user-info">
                     <div className="name">{name}</div>

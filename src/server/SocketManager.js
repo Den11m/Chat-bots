@@ -1,21 +1,22 @@
 const io = require('./index.js').io;
 
-const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED, 
+const { VERIFY_USER, USER_CONNECTED, USER_DISCONNECTED,
 		LOGOUT, COMMUNITY_CHAT, MESSAGE_RECIEVED, MESSAGE_SENT,
 		TYPING, PRIVATE_MESSAGE, NEW_CHAT_USER } = require('../Events');
 
 const { createUser, createMessage, createChat, bots } = require('../Factories');
 
-let connectedUsers = {...bots };
+let connectedUsers = {...bots};
 
 let communityChat = createChat({name:"Community", isCommunity:true});
 
 module.exports = function(socket){
-					
+
 	// console.log('\x1bc'); //clears console
 	console.log("Socket Id:" + socket.id);
 
 	let sendMessageToChatFromUser;
+	let sendMessageToChatFromBot;
 
 	let sendTypingFromUser;
 
@@ -41,7 +42,7 @@ module.exports = function(socket){
 		console.log(connectedUsers);
 
 	});
-	
+
 	//User disconnects
 	socket.on('disconnect', ()=>{
 		if("user" in socket){
@@ -66,8 +67,30 @@ module.exports = function(socket){
 		callback(communityChat)
 	});
 
-	socket.on(MESSAGE_SENT, ({chatId, message})=>{
-		sendMessageToChatFromUser(chatId, message)
+	socket.on(MESSAGE_SENT, ({chatId, message, botName})=>{
+	    if (botName === 'Echo_bot'){
+            let botMessage = message
+            sendMessageToChatFromUser(chatId, message)
+            sendMessageToChatFromBot = sendMessageToChat(botName);
+            sendMessageToChatFromBot(chatId, botMessage)
+        } else if (botName === 'Reverse_bot'){
+            let botMessage = message.split('').reverse().join('')
+            sendMessageToChatFromUser(chatId, message)
+            sendMessageToChatFromBot = sendMessageToChat(botName);
+            setTimeout(()=>sendMessageToChatFromBot(chatId, botMessage), 3000)
+
+        }else if (botName === 'Spam_bot'){
+            let botMessage = 'I\'m Spam_bot. I answer when I want ))'
+            getRandomInt = (min, max) => {
+                return Math.floor(Math.random() * (max - min)) + min;
+            }
+            let randomTime = getRandomInt(10000, 120000)
+            sendMessageToChatFromUser(chatId, message)
+            sendMessageToChatFromBot = sendMessageToChat(botName);
+            setTimeout(()=>sendMessageToChatFromBot(chatId, botMessage), randomTime)
+        } else {
+            sendMessageToChatFromUser(chatId, message)
+        }
 	});
 
 	socket.on(TYPING, ({chatId, isTyping})=>{
@@ -76,7 +99,7 @@ module.exports = function(socket){
 
     socket.on(PRIVATE_MESSAGE, ({receiver, sender, activeChat})=>{
         if(receiver in connectedUsers){
-        	if(activeChat === null || activeChat.id === communityChat.id){
+        	if(activeChat === null || activeChat.id === communityChat.id || activeChat.name === 'Echo_bot' || activeChat.name === 'Reverse_bot' || activeChat.name === 'Spam_bot' || activeChat.name === 'Ignore_bot'){
 
                 const newChat = createChat({name: receiver, photo:`${connectedUsers[receiver].photo}`, users: [receiver, sender]});
 
@@ -93,6 +116,7 @@ module.exports = function(socket){
 						});
                     socket.emit(NEW_CHAT_USER, {chatId:activeChat.id, newUser: receiver})
 				}
+                const receiverSocket = connectedUsers[receiver].socketId;
         		socket.to(receiverSocket).emit(PRIVATE_MESSAGE, activeChat)
 			}
 		}

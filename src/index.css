@@ -24,7 +24,8 @@ input, textarea {
 }
 
 .login-form h2 {
-    font-size: 5vw
+    font-size: 5vw;
+    text-align: center;
 }
 
 .login-form input {
@@ -108,20 +109,26 @@ input, textarea {
 }
 
 #side-bar .side-bar-select__option {
-    background: #f8f8f8;
+    background: #ffffff;
     width: 100%;
     height: 100%;
-    border: 1px solid #dddddd;
+    border-bottom: 5px solid #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    cursor: pointer
+    cursor: pointer;
+}
+
+.side-bar-select__option:hover {
+    background: #f8f8f8;
+    color: #494e76;
 }
 
 #side-bar .side-bar-select__option.active {
     background: #ffffff;
-    border: none;
+    border-bottom: 5px solid #494e76;
+    color: #494e76;
 }
 
 #side-bar .search {
@@ -142,6 +149,7 @@ input, textarea {
 }
 
 #side-bar .user-photo {
+    position: relative;
     width: 60px;
     height: 60px;
 }
@@ -149,6 +157,7 @@ input, textarea {
 #side-bar .user-photo img {
     width: 60px;
     height: auto;
+    border-radius: 3px;
 }
 
 #side-bar .search input {
@@ -338,7 +347,7 @@ input, textarea {
 
 .chat-room {
     display: grid;
-    grid-template: 24vh 1fr 8vh / 100%;
+    grid-template: 16vh 1fr 8vh / 100%;
     height: 100%;
     width: 100%;
 }
@@ -350,7 +359,7 @@ input, textarea {
 }
 
 .thread-container {
-    display: grid;
+    /*display: grid;*/
     flex-grow: 1;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -552,4 +561,15 @@ input, textarea {
 .message-input .message-form .send:disabled {
     opacity: .75;
     background: #428bca
+}
+
+.online {
+    border-radius: 50%;
+    background-color: rgb(32, 214, 62);
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
+    width: 15px;
+    height: 15px;
+    z-index: 2;
 }
